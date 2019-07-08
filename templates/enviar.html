@@ -2,8 +2,8 @@
 {% block title %}Enviar Mensaje{% endblock title %}
 {% block content %}
 
-<div class="d-flex justify-content-between">
-    <div>
+<div class="pt-2 d-flex justify-content-between">
+    <div class="text-black font-weight-bold shadow p-3 mb-5 bg-white rounded">
         <p>Hola {{user.name}}</p>
         <p>Este es su email: {{user.email}}</p>
     </div>
@@ -11,21 +11,19 @@
         <a class="btn btn-primary btn-sm" href="/logout" role="button">Desconectar</a>
     </div>
 </div>
-<form method="post" action="/enviar-mensaje">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">Nombre y apellido</span>
-      </div>
-      <input type="text" autofocus name="nombre_destinatario" aria-label="First name" class="form-control">
-      <input type="text" autofocus name="apellido_destinatario" aria-label="Last name" class="form-control">
+<form method="post" action="/enviar">
+    <div class="form-group">
+        <label for="formGroupExampleInput">Nombre del destinatario</label>
+        <input type="text" autofocus name="destinatario" class="form-control" id="formGroupExampleInput" placeholder="Nombre">
     </div>
+
     <div class="form-group">
         <label for="exampleFormControlInput1">Email del destinatario</label>
         <input type="email" autofocus name="email_destino" class="form-control" id="exampleFormControlInput1" placeholder="nombre@correo.com">
     </div>
     <div class="form-group">
         <label for="exampleFormControlTextarea1">Escriba su mensaje</label>
-        <textarea class="form-control" autofocus name="mensaje_enviado" id="exampleFormControlTextarea1" rows="5"></textarea>
+        <textarea class="form-control" autofocus name="mensaje_enviado" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Enviar</button>
 </form>

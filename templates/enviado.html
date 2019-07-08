@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock title %}
+{% block content %}
+
+<h2>Mensajes enviados</h2>
+
+{% if message_sent %}
+    <p>Hola {{user.name}}</p>
+    <p>Tienes este mensaje: {{user.email}}</p>
+{% else %}
+    <form method="post" action="/login">
+        <input type="text" name="user-name" placeholder="Enter your name"><br>
+        <input type="email" name="user-email" placeholder="Enter your email address"><br>
+
+        <button>Submit</button>
+    </form>
+{% endif %}
+
+
+{% endblock content %}

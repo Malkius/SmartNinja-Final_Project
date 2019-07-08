@@ -1,6 +1,6 @@
 import requests
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from models import User, db
+from models import User, Destiny, db
 
 app = Flask(__name__)
 db.create_all()
@@ -19,11 +19,12 @@ def index():
     elif request.method == "POST":
         nombre = request.form.get("nombre")
         email = request.form.get("email")
+        password = request.form.get("password")
 
         print(nombre)
         print(email)
 
-        user = User(name=nombre, email=email)
+        user = User(name=nombre, email=email, password=password)
         db.add(user)
         db.commit()
 
@@ -52,25 +53,39 @@ def enviar():
         return render_template("enviar.html", user=user)
 
     elif request.method == "POST":
-        name_destiny = request.form.get("nombre_destinatario")
-        last_name = request.form.get("apellido_destinatario")
+        name_destiny = request.form.get("destinatario")
         email_destiny = request.form.get("email_destino")
         message_sent = request.form.get("mensaje_enviado")
 
         print(name_destiny)
-        print(last_name)
         print(email_destiny)
         print(message_sent)
 
-        user = User(name_destiny=name_destiny, last_name=last_name,
-                    email_destiny=email_destiny, message_sent=message_sent)
+        envio = Destiny(destinatario=name_destiny, email_destiny=email_destiny, message_sent=message_sent)
 
-        db.add(user)
+        db.add(envio)
         db.commit()
+        message = "Su mensaje ha sido enviado."
+        return render_template("resultado_envio.html", message=message)
 
-        response = make_response(redirect(url_for("index")))
 
-        return response
+"""
+@app.route("/enviado")
+def enviado():
+    if request.method == "GET":
+        email_address = request.cookies.get("email")
+        if email_address:
+            user = db.query(User).filter_by(email=email_address).first()
+        else:
+            user = None
+        return render_template("index.html", user=user)
+
+    elif user:
+        mensajes = db.query(Destiny).filter_by(destinatario=email_destiny).all()
+        return render_template("enviado.html", user=user, mensajes=mensajes)
+    else:
+        return redirect(url_for("index"))
+"""
 
 
 @app.route("/tiempo", methods=["GET"])
